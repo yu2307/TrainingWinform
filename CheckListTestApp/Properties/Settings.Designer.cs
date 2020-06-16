@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LoginTestApp.Properties
+namespace CheckListTestApp.Properties
 {
 
 
