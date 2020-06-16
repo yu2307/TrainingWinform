@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "Windows
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cloock", "..\cloock\cloock.csproj", "{D5CAB1B5-A374-4B8B-93CE-ACFF30A86473}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ButtonTestApp", "..\ButtonTestApp\ButtonTestApp.csproj", "{FA89CD52-FF59-4F64-8584-F9A5810978AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckBoxTestApp", "..\CheckBoxTestApp\CheckBoxTestApp.csproj", "{1FE88F3F-E61A-4EB5-89B6-94FD675D85FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "radioButtonTestApp", "..\radioButtonTestApp\radioButtonTestApp.csproj", "{96C4A039-2BE7-4C25-A5CE-3C90CE6811FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +27,18 @@ Global
 		{D5CAB1B5-A374-4B8B-93CE-ACFF30A86473}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5CAB1B5-A374-4B8B-93CE-ACFF30A86473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5CAB1B5-A374-4B8B-93CE-ACFF30A86473}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA89CD52-FF59-4F64-8584-F9A5810978AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA89CD52-FF59-4F64-8584-F9A5810978AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA89CD52-FF59-4F64-8584-F9A5810978AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA89CD52-FF59-4F64-8584-F9A5810978AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FE88F3F-E61A-4EB5-89B6-94FD675D85FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FE88F3F-E61A-4EB5-89B6-94FD675D85FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FE88F3F-E61A-4EB5-89B6-94FD675D85FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FE88F3F-E61A-4EB5-89B6-94FD675D85FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96C4A039-2BE7-4C25-A5CE-3C90CE6811FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96C4A039-2BE7-4C25-A5CE-3C90CE6811FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96C4A039-2BE7-4C25-A5CE-3C90CE6811FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96C4A039-2BE7-4C25-A5CE-3C90CE6811FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
