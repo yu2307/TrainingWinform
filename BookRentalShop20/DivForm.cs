@@ -15,7 +15,6 @@ namespace BookRentalShop20
 {
     public partial class DivForm : MetroForm 
     {
-        string strConnString = "Data Source=127.0.0.1;Initial Catalog=BookRentalShopDB;Persist Security Info=True;User ID=sa;Password=p@ssw0rd!";
         string mode = "";
         private SqlConnection conn;
 
@@ -30,7 +29,7 @@ namespace BookRentalShop20
         }
         private void UpdateData()
         {
-            using (SqlConnection conn = new SqlConnection(strConnString))
+            using (SqlConnection conn = new SqlConnection(Commons.CONNSTRING))
             {
                 conn.Open(); //DB열기
                 string strQuery = "SELECT Division, Names FROM divtbl";
@@ -102,7 +101,7 @@ namespace BookRentalShop20
                 return;
             }
 
-            using (SqlConnection conn = new SqlConnection(strConnString))
+            using (SqlConnection conn = new SqlConnection(Commons.CONNSTRING))
             { // using 괄호가 없어서 오류
                 conn.Open();
                 SqlCommand cmd = new SqlCommand();
@@ -152,7 +151,7 @@ namespace BookRentalShop20
         private void DeleteProcess()
 
         {
-            using (SqlConnection conn = new SqlConnection(strConnString))
+            using (SqlConnection conn = new SqlConnection(Commons.CONNSTRING))
             {
                 conn.Open();
                 SqlCommand cmd = new SqlCommand();

@@ -1,81 +1,58 @@
 ﻿using MetroFramework;
 using MetroFramework.Forms;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BookRentalShop20
 {
-    public partial class UserForm : MetroForm 
+    public partial class MemberForm : MetroForm 
     {
         string mode = "";
         private SqlConnection conn;
 
-        public UserForm()
+        public MemberForm()
         {
             InitializeComponent();
         }
 
         private void DivForm_Load(object sender, EventArgs e)
         {
-            UpdateData();
+            
         }
         private void UpdateData()
         {
             using (SqlConnection conn = new SqlConnection(Commons.CONNSTRING))
             {
                 conn.Open(); //DB열기
-                string strQuery = " SELECT id,userID,password,lastLoginDt,loginIpAddr " + 
-                                  " FROM dbo.userTbl ";
+                string strQuery = " SELECT Idx, Names, Levels, Addr, Mobile, Email " +
+                                  " FROM dbo.membertbl ";
                 // SqlCommand cmd = new SqlCommand(strQuery, conn);
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(strQuery, conn);
                 DataSet ds = new DataSet();
-                dataAdapter.Fill(ds, "usertbl");
+                dataAdapter.Fill(ds, "membertbl");
 
-                GrdUserTbl.DataSource = ds;
-                GrdUserTbl.DataMember = "usertbl";
+                GrdMemberTbl.DataSource = ds;
+                GrdMemberTbl.DataMember = "membertbl";
 
             }
-
-            DataGridViewColumn column = GrdUserTbl.Columns[0];
-            column.Width = 40;
-            column.HeaderText = "순번";
-            column = GrdUserTbl.Columns[1];
-            column.Width = 80;
-            column.HeaderText = "아이디";
-            column = GrdUserTbl.Columns[2];
-            column.Width = 100;
-            column.HeaderText = "패스워드";
-            column = GrdUserTbl.Columns[3];
-            column.Width = 120;
-            column.HeaderText = "최종접속시간";
-            column = GrdUserTbl.Columns[4];
-            column.Width = 150;
-            column.HeaderText = "접속 아이피 주소";
-            
-
         }
-        /// <summary>
-        /// 그리드 셀클릭 이벤트
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void GrdDivTbl_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if(e.RowIndex > -1)
             {
-                DataGridViewRow data = GrdUserTbl.Rows[e.RowIndex];
-                TxtId.Text = data.Cells[0].Value.ToString();
-                TxtUserID.Text = data.Cells[1].Value.ToString();
-                TxtPassword.Text = data.Cells[2].Value.ToString();
-               
+                DataGridViewRow data = GrdMemberTbl.Rows[e.RowIndex];
+                TxtIdx.Text = data.Cells[0].Value.ToString();
+                TxtNames.Text = data.Cells[1].Value.ToString();
+                TxtIdx.ReadOnly = true;
+                TxtIdx.BackColor = Color.Beige;
+                CboLevels.SelectedIndex = CboLevels.FindString(data.Cells[2].Value.ToString());
+                TxtAddr.Text = data.Cells[3].Value.ToString();
+                TxtMobile.Text = data.Cells[4].Value.ToString();
+                TxtEmail.Text = data.Cells[5].Value.ToString();
 
                 mode = "UPDATE";
             }
@@ -91,7 +68,8 @@ namespace BookRentalShop20
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            if(string.IsNullOrEmpty(TxtUserID.Text)|| string.IsNullOrEmpty(TxtPassword.Text))
+            if(string.IsNullOrEmpty(TxtEmail.Text)|| string.IsNullOrEmpty(TxtNames.Text)
+                 || string.IsNullOrEmpty(TxtMobile.Text) || string.IsNullOrEmpty(TxtAddr.Text))
             {
                 MetroMessageBox.Show(this, "빈값은 저장할 수 없습니다.", "경고",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -109,12 +87,11 @@ namespace BookRentalShop20
 
         private void ClearTextControls()
         {
-            TxtId.Text = "";
-            TxtUserID.Text = "";
-            TxtPassword.Text = "";
-            //TxtUserID.ReadOnly = false;
-           // TxtUserID.BackColor = Color.White;
-            TxtUserID.Focus();
+            TxtIdx.Text = TxtNames.Text = TxtAddr.Text = TxtMobile.Text = TxtEmail.Text = "";
+            CboLevels.SelectedIndex = -1;
+            TxtIdx.ReadOnly = true;
+            TxtIdx.BackColor = Color.White;
+            TxtIdx.Focus();
         }
 
         private void SaveProcess()
@@ -135,41 +112,59 @@ namespace BookRentalShop20
 
                 if (mode == "UPDATE")
                 {
-                    strQuery = "UPDATE dbo.userTbl" +
-                                " SET userID = @UserID," +
-                                 " password = @Password" +
-                                 " WHERE Id  = @Id";
+                    strQuery = " UPDATE dbo.membertbl "
+                             + " SET Names = @Names, Levels = @Levels, Addr = @Addr, Mobile = @Mobile, Email = @Email "
+                             + " WHERE Idx = @Idx ";
 
 
                 }
                 else if (mode == "INSERT")
                 {
-                    strQuery = " INSERT INTO dbo.userTbl(userID, password) " +
-                                " VALUES(@userID, @password) ";
+                    strQuery = " INSERT INTO dbo.membertbl(Names, Levels, Addr, Mobile, Email) "
+                              + " VALUES(@Names, @Levels, @Addr, @Mobile, @Email) ";
+
                 }
                      cmd.CommandText = strQuery;
 
-                SqlParameter parmUserID = new SqlParameter("@UserID", SqlDbType.VarChar,12);
-                parmUserID.Value = TxtUserID.Text;
-                cmd.Parameters.Add(parmUserID);
+                SqlParameter parmNames = new SqlParameter("@Names", SqlDbType.VarChar, 45);
+                parmNames.Value = TxtNames.Text;
+                cmd.Parameters.Add(parmNames);
 
-                SqlParameter parmPassword = new SqlParameter("@Password", SqlDbType.VarChar, 20);
-                parmPassword.Value = TxtPassword.Text;
-                cmd.Parameters.Add(parmPassword);
+                SqlParameter parmLevels = new SqlParameter("@Levels", SqlDbType.Char, 1);
+                parmLevels.Value = CboLevels.SelectedItem;
+                cmd.Parameters.Add(parmLevels);
 
-                if (mode == "UPDATE")
+                SqlParameter parmAddr = new SqlParameter("@Addr", SqlDbType.VarChar, 100);
+                parmAddr.Value = TxtAddr.Text;
+                cmd.Parameters.Add(parmAddr);
+
+                SqlParameter parmMobile = new SqlParameter("@Mobile", SqlDbType.Char, 13);
+                parmMobile.Value = TxtMobile.Text;
+                cmd.Parameters.Add(parmMobile);
+
+                SqlParameter parmEmail = new SqlParameter("@Email", SqlDbType.VarChar, 50);
+                parmEmail.Value = TxtEmail.Text;
+                cmd.Parameters.Add(parmEmail);
+
+              if(mode == "UPDATE")
                 {
-                    SqlParameter parmId = new SqlParameter("@Id", SqlDbType.Int);
-                    parmId.Value = TxtId.Text;
-                    cmd.Parameters.Add(parmId);
-
-                    
+                    SqlParameter parmIdx = new SqlParameter("@Idx", SqlDbType.Int);
+                    parmIdx.Value = TxtIdx.Text;
+                    cmd.Parameters.Add(parmIdx);
                 }
-                cmd.ExecuteNonQuery();
 
+                cmd.ExecuteNonQuery();
             }
         }
 
+        private void TxtNames_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.KeyChar == 13)
+            {
+                BtnSave_Click(sender, new EventArgs());
+            }
+            
+        }
 
         private void BtnCancel_Click(object sender, EventArgs e)
         {
@@ -188,7 +183,7 @@ namespace BookRentalShop20
                                   " WHERE Division = @Division ";
 
                 SqlParameter parmDivision = new SqlParameter("@Division", SqlDbType.Char, 4);
-                parmDivision.Value = TxtUserID.Text;
+                parmDivision.Value = TxtIdx.Text;
                 cmd.Parameters.Add(parmDivision);
 
                 cmd.ExecuteNonQuery();
@@ -198,7 +193,7 @@ namespace BookRentalShop20
 
         private void BtnDelete_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(TxtUserID.Text) || string.IsNullOrEmpty(TxtPassword.Text))
+            if (string.IsNullOrEmpty(TxtIdx.Text) || string.IsNullOrEmpty(TxtNames.Text))
             {
                 MetroMessageBox.Show(this, "빈값은 저장할 수 없습니다.", "경고",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -208,6 +203,11 @@ namespace BookRentalShop20
             DeleteProcess();
             UpdateData();
             ClearTextControls();
+        }
+
+        private void MemberForm_Load(object sender, EventArgs e)
+        {
+            UpdateData();
         }
     }
 }
