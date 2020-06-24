@@ -60,6 +60,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BookRentalShopDBDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Rental.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Rental.Designer.cs">
+      <DependentUpon>Rental.cs</DependentUpon>
+    </Compile>
     <Compile Include="Commons.cs" />
     <Compile Include="BooksForm.cs">
       <SubType>Form</SubType>
@@ -99,6 +105,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Rental.resx">
+      <DependentUpon>Rental.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BooksForm.resx">
       <DependentUpon>BooksForm.cs</DependentUpon>
     </EmbeddedResource>
